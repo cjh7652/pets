@@ -1,0 +1,73 @@
+.mainslider{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    padding-top: 80px;
+    transition: all .5s;
+    .cont{
+        width: 940px;
+        position: absolute;
+        top: 140px;
+        left: 50%;
+        margin-left: -470px;
+    }
+    .page_box{
+        position: absolute;
+        z-index: 11;
+        width: 940px;
+        bottom: 50px;
+        left: 50%;
+        margin-left: -470px;
+        background: red;
+        .page{
+            position: relative;
+            width: 370px;
+            height: 50px;
+            background: yellow;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .swiper_progress_bar{
+                width: 150px;
+                position: relative;
+                height: 2px;
+                display: inline-block;
+                .slider-bar{
+                    background: #b2b2b2;
+                    height: 2px;
+                    width: inherit;
+                    left: 0;
+                    bottom: 0;
+                    position: absolute;
+                    .fill{
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        background: #000;
+                        width: 0;
+                        height: 100%;
+                        transition: width 1s linear;
+                    }
+                }
+            }
+            .swiper-pagination{
+                display: flex;
+                width:auto;
+                font-size: 14px;
+                margin-left: 160px;
+                span:first-child{font-weight: bold;}
+            }
+            .swiper-btn{
+                display: flex;
+                .swiperPrevBtn{
+                    cursor: pointer;
+                }
+                .btn-auto{
+                    .btn-stop{cursor: pointer;}
+                }
+                .swiperNextBtn{cursor: pointer;}
+            }
+        }
+    }
+}
