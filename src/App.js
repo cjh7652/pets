@@ -10,6 +10,7 @@ import Store from "./page/Store";
 import Join from "./page/Join";
 import Home from "./page/Home";
 import Header from "./components/Header";
+import FreshDetail from './components/FreshDetail.jsx';
 import './App.scss';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/brand" element={<Brand />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/join" element={<Join />} />
+        <Route path="/fresh/:id" element={<FreshDetail />} />
       </Routes>
     </div>
   );

@@ -5,6 +5,7 @@
     overflow: hidden;
     padding-top: 100px;
     transition: all .5s;
+    
     .cont{
         width: 940px;
         position: absolute;
@@ -112,6 +113,31 @@
                 }
                 .swiperNextBtn{cursor: pointer;}
             }
+        }
+    }
+    @media screen and (max-width: 980px) {
+        display: flex;
+        flex-direction: column-reverse;
+        .cont{
+            position: static;
+             width: 50%;
+             z-index: 9999;
+             margin: 0;
+             padding-left: 88px;
+             padding-bottom: 20px;
+             margin-top: -50px;
+         /*    top: 140px;
+            left: 50%; */
+        }
+        .img_wrap{
+            width: 80%;
+            margin: 0 auto;
+        }
+        .page_box{
+            position: static;
+           padding-left:88px;
+            margin-left: 0;
+
         }
     }
 }

@@ -10,7 +10,7 @@ const Header = () => {
         <div className='header'>
             <div className="header-inner">
                 <h1 className="logo">
-                    <Link href="/">
+                    <Link to="/">
                         <img src={process.env.PUBLIC_URL + "/img/logo.png"} alt="" className="p"/>
                         <img src={process.env.PUBLIC_URL + "/img/logo_m.png" } alt="" className="m"/>
                     </Link>
