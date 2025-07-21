@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext } from 'react';
+import {DataFreshContext} from '../App';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,10 +10,11 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import './fresh.scss';
-import data from '../data/datafresh'
+/* import data from '../data/datafresh'; */
 import { Link } from 'react-router-dom';
 
 const Fresh = () => {
+    const {freshData} =useContext(DataFreshContext)
     return (
         <div className='fresh'>
             <h2>Fresh</h2>
@@ -45,7 +47,7 @@ const Fresh = () => {
                 >
                    
                     {
-                        data.map((item, idx) => (
+                        freshData.map((item, idx) => (
                              <SwiperSlide className='freshWrap'>
                                 <Link to={`/fresh/${item.id}`}>
                                     <img src={item.img} alt={item.title} />

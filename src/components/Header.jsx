@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
 import Navbar from "./Navbar";
 import { IoSearch } from "react-icons/io5";
@@ -6,8 +6,22 @@ import { FaBasketShopping } from "react-icons/fa6";
 import { IoPersonOutline } from "react-icons/io5";
 
 const Header = () => {
+    const [isScrolled, setIsScrolled] = useState(false);
+     useEffect(() => {
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            if (scrollY > 100) { // 100px 이상 스크롤되면 배경 바뀜
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
     return (
-        <div className='header'>
+        <div className={`header ${isScrolled ? 'scrolled': ""}`}>
             <div className="header-inner">
                 <h1 className="logo">
                     <Link to="/">
