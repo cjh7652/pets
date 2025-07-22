@@ -71,6 +71,9 @@ const LocationDetail = () => {
         <a href={item.sns.blog} target="_blank" rel="noopener noreferrer">블로그</a>
       </div>
 
+      <div className="mapTitle">
+        <h3>찾아오시는 길</h3>
+      </div>
       <div id="map" style={{ width: '100%', height: '400px', marginTop: '20px' }}></div>
     </div>
   );

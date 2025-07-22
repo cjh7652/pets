@@ -15,6 +15,7 @@ import Header from "./components/Header";
 import FreshDetail from './components/FreshDetail.jsx';
 import LocationDetail from './components/LocationDetail.jsx';
 import data from './data/datafresh.js';
+import Footer from './components/Footer.jsx'
 import './App.scss';
 const DataFreshContext=createContext();
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route path="/fresh/:id" element={<FreshDetail />} />
           <Route path="/location/:id" element={<LocationDetail />} />
         </Routes>
+        <Footer/>
       </div>
    </DataFreshContext.Provider>
   );
