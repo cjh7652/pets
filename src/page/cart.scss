@@ -1,26 +1,14 @@
-.cart{
-    margin: 150px 0 200px;
-    position: relative;
-    h2{
-        text-align: center;
-    }
-    p{
-        text-align: center;
-    }
-    ul{
-        li{
-            img{}
-            span{}
-        }
-    }
+.cart-container{
+    width: 50%;
+    margin: 150px auto 50px;
+    h2{text-align: center; margin-bottom: 30px;}
+    p{text-align: center;}
+    
     button{
         padding: 10px 30px;
         background: orangered;
         color: #fff;
         border: none;
-        margin-top: 100px;
-       position: absolute;
-       left: 50%;
-       transform: translateX(-50%);
+        
     }
 }
