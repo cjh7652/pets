@@ -1,55 +1,87 @@
-import React, { useContext, useState } from 'react';
-import { DataFreshContext } from '../App';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, {useContext, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
+import {DataFreshContext} from '../App';
+import { useParams } from "react-router-dom";
 import { auth, db } from '../firebase';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import './freshBox.scss';
 
-
 const FreshDetail = () => {
-    const { id } = useParams();
-    const { freshData } = useContext(DataFreshContext);
-    const item = freshData.find((item) => String(item.id) === String(id));
+    const {id} = useParams();
+    const { freshData } =useContext(DataFreshContext);
+    const item=freshData.find((item)=>String(item.id)===String(id));
     const [added, setAdded] = useState(false);
     const navigate = useNavigate();
 
-    if (!item) {
-        return <div>해당 상품을 찾을수 없습니다.</div>
+    if(!item) {
+        return <div>해당 상품을 찾을 수 없습니다.</div>
     }
 
-    const handleAddToCart = async () => {
+    const handleAddCart = async () => {
         const user = auth.currentUser;
         if (!user) {
             navigate('/login');
             return;
         }
-        // Firestore에 장바구니 추가 (users/{uid}/cart/{itemId})
-        const cartItemRef = doc(db, "users", user.uid, "cart", String(item.id));
-        const cartItemSnap = await getDoc(cartItemRef);
-        if (cartItemSnap.exists()) {
-            // 이미 장바구니에 있으면 수량 증가
-            const prevQty = cartItemSnap.data().qty || 1;
-            await setDoc(cartItemRef, { ...item, qty: prevQty + 1 });
+    
+        const cartRef = doc(db, 'carts', user.uid);
+        const cartSnap = await getDoc(cartRef);
+    
+        let updatedItems = [];
+    
+        if (cartSnap.exists()) {
+            const existingItems = cartSnap.data().items || [];
+    
+            const itemIndex = existingItems.findIndex((i) => i.id === item.id);
+    
+            if (itemIndex > -1) {
+                // 이미 같은 상품이 있는 경우 → 수량 증가
+                updatedItems = [...existingItems];
+                updatedItems[itemIndex].count += 1;
+            } else {
+                // 새 상품 추가
+                updatedItems = [...existingItems, {
+                    id: item.id,
+                    title: item.title,
+                    img: item.img,
+                    price: item.price,
+                    desc: item.desc,
+                    count: 1
+                }];
+            }
+    
+            await setDoc(cartRef, { items: updatedItems });
         } else {
-            await setDoc(cartItemRef, { ...item, qty: 1 });
+            // 장바구니 문서가 없으면 새로 생성
+            updatedItems = [{
+                id: item.id,
+                title: item.title,
+                img: item.img,
+                price: item.price,
+                desc: item.desc,
+                count: 1
+            }];
+            await setDoc(cartRef, { items: updatedItems });
         }
+    
         setAdded(true);
     };
     
+
     return (
         <div className='freshBox'>
             <h2>{item.title}</h2>
-            <div className="freshBoxItem">
+            <div className='freshBoxItem'>
                 <img src={process.env.PUBLIC_URL + item.img} alt={item.title} />
                 <div className="price">{item.price}</div>
                 <div className="description">{item.desc}</div>
             </div>
             {!added ? (
-                <button onClick={handleAddToCart}>장바구니 담기</button>
+                <button onClick={handleAddCart} className="add-cart-btn">장바구니 담기</button>
             ) : (
-                <div>
-                    <button onClick={() => navigate('/')}>쇼핑 계속하기</button>
-                    <button onClick={() => navigate('/cart')}>장바구니로 이동</button>
+                <div style={{marginTop:'20px'}}>
+                    <button onClick={()=>navigate('/')} style={{marginRight:'10px'}}>쇼핑 계속하기</button>
+                    <button onClick={()=>navigate('/cart')}>장바구니로 가기</button>
                 </div>
             )}
         </div>
